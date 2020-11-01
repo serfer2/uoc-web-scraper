@@ -1,11 +1,11 @@
 class Resource:
 
-    TYPE_MASTER_UNIVERSITARIO = 'master_universitario',
-    TYPE_MASTER = 'master',
-    TYPE_DIPLOMA_POSGRADO = 'diploma_de_posgrado',
-    TYPE_ESPECIALIZACION = 'especializacion',
-    TYPE_CURSO = 'curso',
-    TYPE_CURSO_IDIOMAS = 'curso_de_idiomas',
+    TYPE_MASTER_UNIVERSITARIO = 'master_universitario'
+    TYPE_MASTER = 'master'
+    TYPE_DIPLOMA_POSGRADO = 'diploma_de_posgrado'
+    TYPE_ESPECIALIZACION = 'especializacion'
+    TYPE_CURSO = 'curso'
+    TYPE_CURSO_IDIOMAS = 'curso_de_idiomas'
     TYPE_SEMINARIO = 'seminario'
     TYPES = {
         TYPE_MASTER_UNIVERSITARIO: 'Máster universitario',
@@ -17,7 +17,7 @@ class Resource:
         TYPE_SEMINARIO: 'Seminario'
     }
 
-    def __init__(self, type, name, description='', duration='', title='', ects=None, price=None, url=''):
+    def __init__(self, type, name, description='', duration='', title='', ects=None, price=None, url='', date_init=''):
         self.__type = self.__validate_type(type)
         self.__name = self.__validate_name(name)
         self.__description = description
@@ -26,6 +26,10 @@ class Resource:
         self.__ects = ects
         self.__price = price
         self.__url = url
+        self.__date_init = date_init
+
+    def __str__(self):
+        return f'[{self.__type}] {self.__name}'
 
     def as_dict(self):
         return {
@@ -36,7 +40,8 @@ class Resource:
             'title': self.__title,
             'ects': self.__ects,
             'price': self.__price,
-            'url': self.__url
+            'url': self.__url,
+            'date_init': self.__date_init
         }
 
     def __validate_type(self, type):
