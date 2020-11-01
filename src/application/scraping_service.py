@@ -58,3 +58,25 @@ class ScrapingService:
                 title = text.replace('Título:', '').strip()
 
         return ects, date_init, title
+
+    def x_uoc_resource_data(self, html):
+        doc = lxml.html.fromstring(html)
+
+        name = doc.xpath('//h1/text()')[0].strip()
+        descriptions = doc.xpath('//span[@property="description"]//p')
+        desc = ' '.join([d.text_content().strip() for d in descriptions])
+
+        duration = doc.xpath('//div[@class="iconsProd bg-x"]//div/text()')[0].strip()
+        date_init = doc.xpath('//div[@class="iconsProd bg-x"]//div/text()')[3].strip()
+        price = doc.xpath('//div[@class="iconsProd bg-x"]//div/text()')[4].strip()
+
+        title = doc.xpath('//div[@class="titulacion"]/text()')[0].strip()
+
+        return {
+            'name': name,
+            'description': desc,
+            'duration': duration,
+            'date_init': date_init,
+            'price': price,
+            'title': title
+        }
