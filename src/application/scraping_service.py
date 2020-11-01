@@ -40,3 +40,21 @@ class ScrapingService:
     def delay(self):
         if self._delay_secs:
             time.sleep(self._delay_secs)
+
+    def get_ects_date_init_title(self, html):
+        ects = None
+        date_init = ''
+        title = ''
+
+        doc = lxml.html.fromstring(html)
+
+        for p in doc.xpath('//p[@class="m-bottom-y2"]'):
+            text = p.text_content().strip()
+            if 'Créditos:' in text:
+                ects = text.replace('Créditos:', '').strip().replace('ECTS', '').strip()
+            elif 'Inicio:' in text:
+                date_init = text.replace('Inicio:', '').strip()
+            elif 'Título:' in text:
+                title = text.replace('Título:', '').strip()
+
+        return ects, date_init, title

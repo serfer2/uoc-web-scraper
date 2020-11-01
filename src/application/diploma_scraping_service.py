@@ -17,12 +17,13 @@ class DiplomaScrapingService(ScrapingService):
 
         name = doc.xpath('//h1')[0].text_content().strip()
         desc = doc.xpath('//section[@class="flexbox-layout m-bottom-2y uc227 is-first-unfolded"]')[0].text_content().strip()
-        date_init = doc.xpath('//p[@class="m-bottom-y2"]/text()')[0].strip()
-        title = doc.xpath('//p[@class="m-bottom-y2"]/text()')[1].strip()
+
+        ects, date_init, title = self.get_ects_date_init_title(html)
 
         return {
             'name': name,
             'description': desc,
+            'ects': ects,
             'date_init': date_init,
             'title': title
         }
