@@ -19,7 +19,8 @@ class ResourceTestCase(TestCase):
             'title': 'A beautiful diploma',
             'ects': 20,
             'price': '100 €',
-            'url': 'http://followtheresistance.com'
+            'url': 'http://followtheresistance.com',
+            'date_init': '17 febrero 2021'
         }
 
     def test_it_raises_exception_when_type_value_is_unknown(self):
