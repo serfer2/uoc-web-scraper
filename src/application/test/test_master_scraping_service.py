@@ -12,7 +12,7 @@ from application import MasterScrapingService
 from test.utils import FakeHtmlReader
 
 
-class DiplomaScrapingServiceTestCase(TestCase):
+class MasterScrapingServiceTestCase(TestCase):
 
     def test_it_gets_all_diploma_detail_urls(self):
         html = ''
