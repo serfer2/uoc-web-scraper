@@ -5,13 +5,9 @@ from datetime import datetime
 
 from shared.settings import (
     CSV_PREFIX,
-    repository_class,
     resource_types_configuration
 )
-from infrastructure import (
-    HtmlReader,
-    ResourceCsvRepository
-)
+from infrastructure import ResourceCsvRepository
 
 
 def main():
@@ -27,11 +23,10 @@ def main():
 
         scraping_service = scraping_service_class(
             reader=reader_class(),
-            repository=repository,
             initial_url=config['initial_url']
         )
 
-        scraping_service.scrape()
+        resources = scraping_service.scrape()
 
     return 0
 

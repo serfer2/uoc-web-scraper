@@ -23,14 +23,13 @@ class AnotherFakeHtmlReader(FakeHtmlReader):
 
 class ScrapingServiceMock:
 
-    def __init__(self, reader, repository, initial_url):
+    def __init__(self, reader, initial_url):
         self.__reader = reader
-        self.__repository = repository
         self.__initial_url = initial_url
 
     def scrape(self):
         scraping_service_mock_calls.append(
-            (type(self), type(self.__reader), type(self.__repository), self.__initial_url)
+            (type(self), type(self.__reader), self.__initial_url)
         )
 
 
@@ -65,12 +64,10 @@ class MainTestCase(TestCase):
         expect(scraping_service_mock_calls[0]).to(equal((
             ScrapingServiceMock,
             FakeHtmlReader,
-            ResourceCsvRepository,
             'http://some.url.com'
         )))
         expect(scraping_service_mock_calls[1]).to(equal((
             AnotherScrapingServiceMock,
             AnotherFakeHtmlReader,
-            ResourceCsvRepository,
             'http://another.url.com'
         )))

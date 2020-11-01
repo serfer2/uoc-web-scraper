@@ -1,8 +1,6 @@
 
 CSV_PREFIX = 'uoc_educational_offer_'
 
-repository_class = 'infrastructure.ResourceCsvRepository'
-
 resource_types_configuration = {
     'Máster Universitario': {
         'scraper': 'application.UniversitaryMasterScrapingService',
