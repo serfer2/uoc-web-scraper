@@ -18,4 +18,4 @@ def full_url(base_url, relative_url):
 
 def clean_html(text):
     # Clean HTML text format
-    return text.replace('&nbsp;', ' ').replace('\n', '').replace('\t', '').replace('      ', ' ').replace('     ', ' ').replace('    ', ' ').replace('   ', ' ').replace('  ', ' ').replace('  ', ' ').replace('> <', '><').strip()
+    return text.replace('&nbsp;', ' ').replace('\n', ' ').replace('\t', '').replace('      ', ' ').replace('     ', ' ').replace('    ', ' ').replace('   ', ' ').replace('  ', ' ').replace('  ', ' ').replace('> <', '><').strip()
