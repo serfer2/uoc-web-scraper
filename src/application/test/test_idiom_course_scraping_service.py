@@ -54,7 +54,7 @@ class IdiomCourseScrapingServiceTestCase(TestCase):
         reader = FakeHtmlReader(htmls=[html])
         scraper = IdiomCourseScrapingService(reader, 'any_url')
 
-        data = scraper.seminary_resource_data(reader.read('any_url'))
+        data = scraper.x_uoc_resource_data(reader.read('any_url'))
 
         expect(data).to(have_keys({
             'name': 'Speaking Skills for Work',

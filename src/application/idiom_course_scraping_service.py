@@ -30,7 +30,7 @@ class IdiomCourseScrapingService(ScrapingService):
             html = self._reader.read(url)
 
             if self.is_seminary_web(html):
-                data = self.seminary_resource_data(html)
+                data = self.x_uoc_resource_data(html)
                 data.update({
                     'type': Resource.TYPE_SEMINARIO,
                     'url': url
@@ -55,28 +55,6 @@ class IdiomCourseScrapingService(ScrapingService):
             return 'seminario' in h1[0].text_content().strip().lower()
 
         return False
-
-    def seminary_resource_data(self, html):
-        doc = lxml.html.fromstring(html)
-
-        name = doc.xpath('//h1/text()')[0].strip()
-
-        descriptions = doc.xpath('//span[@property="description"]//p')
-        desc = ' '.join([d.text_content().strip() for d in descriptions])
-
-        duration = doc.xpath('//div[@class="iconsProd bg-x"]//div/text()')[0].strip()
-        date_init = doc.xpath('//div[@class="iconsProd bg-x"]//div/text()')[3].strip()
-        price = doc.xpath('//div[@class="iconsProd bg-x"]//div/text()')[4].strip()
-        title = doc.xpath('//div[@class="titulacion"]/text()')[0].strip()
-
-        return {
-            'name': name,
-            'description': desc,
-            'duration': duration,
-            'date_init': date_init,
-            'price': price,
-            'title': title
-        }
 
     def idiom_courses_html_snippets(self, html):
         doc = lxml.html.fromstring(html)
