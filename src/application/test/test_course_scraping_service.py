@@ -23,8 +23,7 @@ class CourseScrapingServiceTestCase(TestCase):
         url = 'https://estudios.uoc.edu/es/masters-posgrados-especializaciones/curso'
         scraper = CourseScrapingService(reader, url)
 
-        urls_xpath = '//div[@data-type="product"]//a[@class="card-absolute-link"]/@href'
-        urls = scraper.get_resources_urls(urls_xpath)
+        urls = scraper.get_resources_urls()
 
         expect(len(urls)).to(equal(77))
         expect(urls[0]).to(equal('https://estudios.uoc.edu/es/masters-posgrados-especializaciones/curso/comunicacion-informacion/acontecimientos-virtuales/presentacion'))
