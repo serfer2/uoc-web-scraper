@@ -1,5 +1,7 @@
 import requests
 
+from shared.tools import clean_html
+
 
 class HtmlReader:
 
@@ -10,12 +12,8 @@ class HtmlReader:
         try:
             response = self.__http_client.get(url)
             if response.status_code == 200:
-                return self.__minimize_html(str(response.text))
+                return clean_html(str(response.text))
         except Exception:
             pass
 
         return None
-
-    def __minimize_html(self, text):
-        # Clean HTML text format
-        return text.replace('\n', '').replace('\t', '').replace('      ', ' ').replace('     ', ' ').replace('    ', ' ').replace('   ', ' ').replace('  ', ' ').replace('  ', ' ').replace('> <', '><').strip()
