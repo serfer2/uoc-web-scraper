@@ -17,14 +17,17 @@ class ScrapingService:
 
     def scrape(self):
         resources = []
-
         for url in self.get_resources_urls():
             self.delay()
+            try:
+                data = self.resource_data(self._reader.read(url))
+                data.update({'type': self._resource_type, 'url': url})
 
-            data = self.resource_data(self._reader.read(url))
-            data.update({'type': self._resource_type, 'url': url})
-
-            resources.append(Resource(**data))
+                resources.append(Resource(**data))
+            except IndexError:
+                print(f'[IndexError] - {url}')
+            except ValueError as ve:
+                print(f'[ValueError] - {url} - {ve}')
 
         return resources
 
@@ -62,7 +65,9 @@ class ScrapingService:
     def x_uoc_resource_data(self, html):
         doc = lxml.html.fromstring(html)
 
-        name = doc.xpath('//h1/text()')[0].strip()
+        name = ''
+        for text in doc.xpath('//h1/text()'):
+            name = f'{name} {text}'.strip()
         descriptions = doc.xpath('//span[@property="description"]//p')
         desc = ' '.join([d.text_content().strip() for d in descriptions])
 

@@ -9,6 +9,7 @@ class HtmlReader:
         self.__http_client = http_client or requests
 
     def read(self, url):
+        print(f'[READ] - {url}')
         try:
             response = self.__http_client.get(url)
             if response.status_code == 200:

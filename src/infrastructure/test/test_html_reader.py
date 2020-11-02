@@ -15,14 +15,14 @@ class HtmlReaderTestCase(TestCase):
     def test_it_returns_none_when_status_code_not_200_OK(self):
         http_client = FakeHttpClient(status_code=400)
 
-        html = HtmlReader(http_client).read(url='http://whatever.com')
+        html = HtmlReader(http_client).read(url='some_url')
 
         expect(html).to(be_none)
 
     def test_it_returns_readed_html_when_status_code_is_200_OK(self):
         http_client = FakeHttpClient(status_code=200, content='<h1>something</h1>')
 
-        html = HtmlReader(http_client).read(url='http://whatever.com')
+        html = HtmlReader(http_client).read(url='some_url')
 
         expect(html).to(equal('<h1>something</h1>'))
 
@@ -35,6 +35,6 @@ class HtmlReaderTestCase(TestCase):
         '''
         http_client = FakeHttpClient(200, content)
 
-        html = HtmlReader(http_client).read(url='http://whatever.com')
+        html = HtmlReader(http_client).read(url='some_url')
 
         expect(html).to(equal('<div><p>hello</p><p>world</p></div>'))

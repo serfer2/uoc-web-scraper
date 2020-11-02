@@ -26,25 +26,27 @@ class IdiomCourseScrapingService(ScrapingService):
 
         for url in self.get_resources_urls():
             self.delay()
-
-            html = self._reader.read(url)
-
-            if self.is_seminary_web(html):
-                data = self.x_uoc_resource_data(html)
-                data.update({
-                    'type': Resource.TYPE_SEMINARIO,
-                    'url': url
-                })
-                resources.append(Resource(**data))
-
-            else:
-                for snippet in self.idiom_courses_html_snippets(html):
-                    course_data = self.idiom_course_resource_data(snippet)
-                    course_data.update({
-                        'type': Resource.TYPE_CURSO_IDIOMAS,
+            try:
+                html = self._reader.read(url)
+                if self.is_seminary_web(html):
+                    data = self.x_uoc_resource_data(html)
+                    data.update({
+                        'type': Resource.TYPE_SEMINARIO,
                         'url': url
                     })
-                    resources.append(Resource(**course_data))
+                    resources.append(Resource(**data))
+                else:
+                    for snippet in self.idiom_courses_html_snippets(html):
+                        course_data = self.idiom_course_resource_data(snippet)
+                        course_data.update({
+                            'type': Resource.TYPE_CURSO_IDIOMAS,
+                            'url': url
+                        })
+                        resources.append(Resource(**course_data))
+            except IndexError:
+                print(f'[ERROR] - {url}')
+            except ValueError as ve:
+                print(f'[ValueError] - {url} - {ve}')
 
         return resources
 
