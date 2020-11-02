@@ -16,8 +16,6 @@ def main():
     repository = ResourceCsvRepository(destination_file)
 
     for resource_type, config in resource_types_configuration.items():
-        print(f'------ Scraping {resource_type} ...')
-
         scraping_service_class = _class(path=config['scraper'])
         reader_class = _class(path=config['reader'])
 
@@ -26,7 +24,8 @@ def main():
             initial_url=config['initial_url']
         )
 
-        resources = scraping_service.scrape()
+        for resource in scraping_service.scrape():
+            repository.persist(resource)
 
     return 0
 
@@ -40,10 +39,10 @@ def _class(path):
 
 
 def _csv_filepath(csv_prefix):
-    path = os.environ.get('STORE_PATH', 'store/')
+    default_dir_path = f'{os.path.dirname(__file__)}/store/'
+    dirpath = os.environ.get('STORE_PATH', default_dir_path)
     filename = f"{csv_prefix}_{datetime.now().strftime('%Y-%m-%d_%H%M%S')}.csv"
-
-    return os.path.join(path, f'/{filename}')
+    return os.path.join(dirpath, filename)
 
 
 if __name__ == '__main__':

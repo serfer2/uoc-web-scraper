@@ -44,6 +44,19 @@ class Resource:
             'date_init': self.__date_init
         }
 
+    def as_list(self):
+        return [
+            self.__type,
+            self.__name,
+            self.__description,
+            self.__duration,
+            self.__title,
+            self.__ects,
+            self.__price,
+            self.__url,
+            self.__date_init
+        ]
+
     def __validate_type(self, type):
         if not type or type not in self.TYPES:
             raise ValueError('Wrong resource type')
