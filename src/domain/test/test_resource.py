@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from expects import (
+    equal,
     expect,
     have_keys
 )
@@ -43,3 +44,20 @@ class ResourceTestCase(TestCase):
         resource_dict = resource.as_dict()
 
         expect(resource_dict).to(have_keys(self.correct_data))
+
+    def test_it_exports_as_list(self):
+        resource = Resource(**self.correct_data)
+
+        resource_list = resource.as_list()
+
+        expect(resource_list).to(equal([
+            Resource.TYPE_MASTER,
+            'How to fly a X-Wing',
+            'Learn to fly a X-Wing and follow the resistance!',
+            '2 weeks',
+            'A beautiful diploma',
+            20,
+            '100 €',
+            'http://followtheresistance.com',
+            '17 febrero 2021'
+        ]))
