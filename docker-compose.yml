@@ -1,6 +1,6 @@
 version: '3'
 services: 
-    api:
+    uocscraper:
         build: ./src/
         volumes: 
             - ./src/:/usr/src/app/
